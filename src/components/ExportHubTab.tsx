@@ -10,11 +10,14 @@ import {
   ArrowDownToLine,
   RefreshCw,
   Loader2,
-  CheckCircle2
+  CheckCircle2,
+  Printer,
+  Eye
 } from "lucide-react";
 import { AnalysisResult, AISettings, CoverLetterTone } from "../types";
 import { safeCopyToClipboard, safeDownloadFile } from "../utils/safeHelpers";
 import { generateCoverLetter } from "../services/aiService";
+import { ResumePreviewModal } from "./ResumePreviewModal";
 
 interface ExportHubTabProps {
   result: AnalysisResult;
@@ -43,6 +46,7 @@ export const ExportHubTab: React.FC<ExportHubTabProps> = ({
 }) => {
   const [copiedCv, setCopiedCv] = useState(false);
   const [copiedCoverLetter, setCopiedCoverLetter] = useState(false);
+  const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
 
   // Tone state & cache of generated letters per tone
   const [selectedTone, setSelectedTone] = useState<CoverLetterTone>("confident");
@@ -193,14 +197,12 @@ export const ExportHubTab: React.FC<ExportHubTabProps> = ({
   const handleSelectTone = (tone: CoverLetterTone) => {
     setSelectedTone(tone);
 
-    // If letter already exists for this tone in cache, immediately show it
     if (toneCache[tone]) {
       setCoverLetterText(toneCache[tone]!);
       setActiveLetterTone(tone);
       return;
     }
 
-    // If a cover letter has already been generated at least once, auto-generate for the newly selected tone immediately!
     if (coverLetterText) {
       runGeneration(tone);
     }
@@ -285,7 +287,7 @@ export const ExportHubTab: React.FC<ExportHubTabProps> = ({
                   Export Tailored Resume
                 </h3>
                 <p className="text-xs text-[#7a8f87] font-medium">
-                  Formatted text with active STAR bullets
+                  Harvard & Stanford visual PDF + raw files
                 </p>
               </div>
             </div>
@@ -295,25 +297,39 @@ export const ExportHubTab: React.FC<ExportHubTabProps> = ({
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="space-y-2.5">
+            {/* Primary Action: Visual PDF Preview Modal */}
             <button
               type="button"
-              id="download-cv-txt-btn"
-              onClick={() => handleDownloadCVFile("txt")}
-              className="py-3 px-4 rounded-full bg-[#fdf8f0] hover:bg-[#f6eee3] border border-[#eee5d8] text-xs font-semibold text-[#14332a] flex items-center justify-center gap-2 transition active:scale-98 cursor-pointer"
+              id="open-pdf-preview-btn"
+              onClick={() => setIsPdfModalOpen(true)}
+              className="w-full py-3 px-4 rounded-full bg-[#14332a] hover:bg-[#0f2d22] text-xs sm:text-sm font-bold text-white flex items-center justify-center gap-2 transition active:scale-98 shadow-[0_4px_12px_rgba(20,51,42,0.18)] cursor-pointer"
             >
-              <ArrowDownToLine className="w-4 h-4 text-[#7a8f87]" />
-              <span>Download (.txt)</span>
+              <Printer className="w-4 h-4 text-[#fde9d9]" />
+              <span>Preview & Export PDF (Harvard / Stanford)</span>
             </button>
-            <button
-              type="button"
-              id="download-cv-md-btn"
-              onClick={() => handleDownloadCVFile("md")}
-              className="py-3 px-4 rounded-full bg-[#14332a] hover:bg-[#0f2d22] text-xs font-bold text-white flex items-center justify-center gap-2 transition active:scale-98 shadow-[0_4px_12px_rgba(20,51,42,0.18)] cursor-pointer"
-            >
-              <Download className="w-4 h-4 text-[#fde9d9]" />
-              <span>Download (.md)</span>
-            </button>
+
+            {/* Secondary Actions: .txt and .md */}
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                id="download-cv-txt-btn"
+                onClick={() => handleDownloadCVFile("txt")}
+                className="py-2.5 px-4 rounded-full bg-[#fdf8f0] hover:bg-[#f6eee3] border border-[#eee5d8] text-xs font-semibold text-[#14332a] flex items-center justify-center gap-2 transition active:scale-98 cursor-pointer"
+              >
+                <ArrowDownToLine className="w-3.5 h-3.5 text-[#7a8f87]" />
+                <span>Download (.txt)</span>
+              </button>
+              <button
+                type="button"
+                id="download-cv-md-btn"
+                onClick={() => handleDownloadCVFile("md")}
+                className="py-2.5 px-4 rounded-full bg-[#fdf8f0] hover:bg-[#f6eee3] border border-[#eee5d8] text-xs font-semibold text-[#14332a] flex items-center justify-center gap-2 transition active:scale-98 cursor-pointer"
+              >
+                <Download className="w-3.5 h-3.5 text-[#7a8f87]" />
+                <span>Download (.md)</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -491,24 +507,35 @@ export const ExportHubTab: React.FC<ExportHubTabProps> = ({
             </p>
           </div>
 
-          <button
-            type="button"
-            id="copy-tailored-cv-btn"
-            onClick={handleCopyTailoredCV}
-            className="flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-[#fdf8f0] hover:bg-[#f6eee3] border border-[#eee5d8] text-xs font-semibold text-[#14332a] transition active:scale-98 cursor-pointer"
-          >
-            {copiedCv ? (
-              <>
-                <Check className="w-4 h-4 text-[#2d6a4f]" />
-                <span className="text-[#2d6a4f]">Copied to Clipboard</span>
-              </>
-            ) : (
-              <>
-                <Copy className="w-4 h-4 text-[#7a8f87]" />
-                <span>Copy Full Resume</span>
-              </>
-            )}
-          </button>
+          <div className="flex items-center gap-2.5">
+            <button
+              type="button"
+              onClick={() => setIsPdfModalOpen(true)}
+              className="flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-[#14332a] hover:bg-[#0f2d22] text-xs font-bold text-white transition active:scale-98 shadow-[0_4px_12px_rgba(20,51,42,0.18)] cursor-pointer"
+            >
+              <Eye className="w-4 h-4 text-[#fde9d9]" />
+              <span>Preview & Print PDF</span>
+            </button>
+
+            <button
+              type="button"
+              id="copy-tailored-cv-btn"
+              onClick={handleCopyTailoredCV}
+              className="flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-[#fdf8f0] hover:bg-[#f6eee3] border border-[#eee5d8] text-xs font-semibold text-[#14332a] transition active:scale-98 cursor-pointer"
+            >
+              {copiedCv ? (
+                <>
+                  <Check className="w-4 h-4 text-[#2d6a4f]" />
+                  <span className="text-[#2d6a4f]">Copied to Clipboard</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="w-4 h-4 text-[#7a8f87]" />
+                  <span>Copy Full Resume</span>
+                </>
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Editable / Viewable Preview Area */}
@@ -518,6 +545,14 @@ export const ExportHubTab: React.FC<ExportHubTabProps> = ({
           </pre>
         </div>
       </div>
+
+      {/* Interactive Visual PDF Preview Modal */}
+      <ResumePreviewModal
+        isOpen={isPdfModalOpen}
+        onClose={() => setIsPdfModalOpen(false)}
+        tailoredResumeText={tailoredResume}
+        onShowToast={onShowToast}
+      />
     </div>
   );
 };
