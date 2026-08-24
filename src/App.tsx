@@ -17,7 +17,7 @@ import { ErrorBoundary } from "./components/ErrorBoundary";
 import { AISettings, AnalysisResult } from "./types";
 import { analyzeResumeWithFallback } from "./services/aiService";
 import { SAMPLE_RESUMES, SAMPLE_JOB_DESCRIPTIONS, MOCK_ANALYSIS_RESULT } from "./data/sampleData";
-import { AlertCircle, WifiOff } from "lucide-react";
+import { AlertCircle, WifiOff, Linkedin, Twitter, Github, Mail, ShieldCheck, Heart } from "lucide-react";
 
 const SETTINGS_STORAGE_KEY = "resumematch_settings_v3";
 const HISTORY_STORAGE_KEY = "resumematch_analysis_history_v2";
@@ -173,8 +173,8 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdf8f0] text-[#14332a] antialiased overflow-x-hidden">
-      <div className="max-w-[1440px] mx-auto px-3.5 sm:px-6 lg:px-8 py-4 sm:py-6">
+    <div className="min-h-screen bg-[#fdf8f0] text-[#14332a] antialiased overflow-x-hidden flex flex-col justify-between">
+      <div className="max-w-[1440px] mx-auto px-3.5 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-0 w-full flex-1 flex flex-col justify-between">
         {/* Top Floating Action Bar (Navbar) */}
         <Navbar
           settings={settings}
@@ -255,6 +255,140 @@ export default function App() {
             </div>
           )}
         </main>
+
+        {/* Global Footer (Matching Cards & Rounded Top Corners) */}
+        <footer className="mt-12 sm:mt-16 rounded-t-[28px] sm:rounded-t-[36px] rounded-b-none bg-gradient-to-br from-[#fef6ec] to-[#fdf8f0] border-t border-x border-[#f1e6d6] border-b-0 relative overflow-hidden font-simple shadow-xs">
+          {/* Animated Organic Ornaments (Hero-Style) */}
+          {/* Shape 1: Morphing peach blob on the left */}
+          <div className="pointer-events-none absolute -bottom-32 -left-24 w-[400px] h-[400px] bg-[#fde9d9] opacity-60 animate-morph-blob" />
+          
+          {/* Shape 2: Floating gentle sage circle on the right */}
+          <div className="pointer-events-none absolute -top-20 -right-16 w-[300px] h-[300px] bg-[#d8f0d8] rounded-full opacity-50 animate-float-slow" />
+          
+          {/* Shape 3: Floating warm peach circle middle right */}
+          <div className="pointer-events-none absolute bottom-20 right-[15%] w-24 h-24 bg-[#f8cbb1] rounded-full opacity-40 hidden sm:block animate-float-reverse" />
+          
+          {/* Shape 4: Pulsing small terracotta accent dot near left */}
+          <div className="pointer-events-none absolute top-24 left-[20%] w-8 h-8 bg-[#f5a07a] rounded-full opacity-50 hidden sm:block animate-pulse-soft" />
+          
+          <div className="w-full px-6 sm:px-10 lg:px-12 py-12 sm:py-14 relative z-10">
+            <div className="flex flex-col xl:flex-row justify-between gap-10 xl:gap-8">
+              
+              {/* Left Column: Brand & Socials */}
+              <div className="xl:w-[25%] flex flex-col items-center xl:items-start text-center xl:text-left">
+                <div className="flex items-center gap-2.5 mb-4">
+                  <img src="/favicon.svg" alt="RoleFit Logo" className="w-8 h-8 rounded-lg shadow-2xs shrink-0" />
+                  <span className="font-black text-[#14332a] text-xl tracking-tight">ROLE<span className="text-[#e07a4f]">FIT</span></span>
+                </div>
+                <p className="text-[13px] text-[#7a8f87] leading-relaxed mb-5 max-w-[280px]">
+                  AI-powered platform to optimize your resume, match roles, and accelerate your career growth.
+                </p>
+                <div className="flex items-center justify-center xl:justify-start gap-2.5">
+                  <a href="#" className="w-9 h-9 rounded-full bg-[#f4ebd9] flex items-center justify-center text-[#14332a] hover:bg-[#14332a] hover:text-white transition-colors shadow-2xs">
+                    <Linkedin className="w-4 h-4" />
+                  </a>
+                  <a href="#" className="w-9 h-9 rounded-full bg-[#f4ebd9] flex items-center justify-center text-[#14332a] hover:bg-[#14332a] hover:text-white transition-colors shadow-2xs">
+                    <Twitter className="w-4 h-4" />
+                  </a>
+                  <a href="https://github.com/abdulrehman1610/RoleFit" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-[#f4ebd9] flex items-center justify-center text-[#14332a] hover:bg-[#14332a] hover:text-white transition-colors shadow-2xs">
+                    <Github className="w-4 h-4" />
+                  </a>
+                  <a href="#" className="w-9 h-9 rounded-full bg-[#f4ebd9] flex items-center justify-center text-[#14332a] hover:bg-[#14332a] hover:text-white transition-colors shadow-2xs">
+                    <Mail className="w-4 h-4" />
+                  </a>
+                </div>
+              </div>
+
+              {/* Middle Columns: Links */}
+              <div className="xl:w-[45%] grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8">
+                {/* Product */}
+                <div>
+                  <h4 className="text-[11px] font-bold text-[#14332a] uppercase tracking-wider mb-4">Product</h4>
+                  <ul className="space-y-3 text-[13px] text-[#7a8f87] font-medium">
+                    <li><a href="#" className="hover:text-[#14332a] transition-colors">Dashboard</a></li>
+                    <li><a href="#" className="hover:text-[#14332a] transition-colors">Gap Analysis</a></li>
+                    <li><a href="#" className="hover:text-[#14332a] transition-colors">Bullet Optimizer</a></li>
+                    <li><a href="#" className="hover:text-[#14332a] transition-colors">ATS & Compliance</a></li>
+                    <li><a href="#" className="hover:text-[#14332a] transition-colors">Export & Delivery</a></li>
+                  </ul>
+                </div>
+
+                {/* Resources */}
+                <div>
+                  <h4 className="text-[11px] font-bold text-[#14332a] uppercase tracking-wider mb-4">Resources</h4>
+                  <ul className="space-y-3 text-[13px] text-[#7a8f87] font-medium">
+                    <li><a href="#" className="hover:text-[#14332a] transition-colors">Resume Tips</a></li>
+                    <li><a href="#" className="hover:text-[#14332a] transition-colors">ATS Guide</a></li>
+                    <li><a href="#" className="hover:text-[#14332a] transition-colors">Skill Matrix</a></li>
+                    <li><a href="#" className="hover:text-[#14332a] transition-colors">Blog</a></li>
+                    <li><a href="#" className="hover:text-[#14332a] transition-colors">Help Center</a></li>
+                  </ul>
+                </div>
+
+                {/* Company */}
+                <div>
+                  <h4 className="text-[11px] font-bold text-[#14332a] uppercase tracking-wider mb-4">Company</h4>
+                  <ul className="space-y-3 text-[13px] text-[#7a8f87] font-medium">
+                    <li><a href="#" className="hover:text-[#14332a] transition-colors">About Us</a></li>
+                    <li><a href="#" className="hover:text-[#14332a] transition-colors">Careers</a></li>
+                    <li><a href="#" className="hover:text-[#14332a] transition-colors">Privacy Policy</a></li>
+                    <li><a href="#" className="hover:text-[#14332a] transition-colors">Terms of Service</a></li>
+                    <li><a href="#" className="hover:text-[#14332a] transition-colors">Contact Us</a></li>
+                  </ul>
+                </div>
+
+                {/* Support */}
+                <div>
+                  <h4 className="text-[11px] font-bold text-[#14332a] uppercase tracking-wider mb-4">Support</h4>
+                  <ul className="space-y-3 text-[13px] text-[#7a8f87] font-medium">
+                    <li><a href="#" className="hover:text-[#14332a] transition-colors">Documentation</a></li>
+                    <li><a href="#" className="hover:text-[#14332a] transition-colors">FAQs</a></li>
+                    <li><a href="#" className="hover:text-[#14332a] transition-colors">Report an Issue</a></li>
+                    <li><a href="#" className="hover:text-[#14332a] transition-colors">Feature Request</a></li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Right Column: Newsletter */}
+              <div className="xl:w-[30%] flex justify-center xl:justify-end">
+                <div className="bg-white border border-[#eee5d8] rounded-2xl p-5 sm:p-6 shadow-2xs max-w-sm w-full h-fit">
+                  <h4 className="text-[11px] font-bold text-[#14332a] uppercase tracking-widest mb-2.5">Stay Ahead In Your Career</h4>
+                  <p className="text-[12px] text-[#7a8f87] mb-4 leading-relaxed">
+                    Get career tips, resume strategies and updates straight to your inbox.
+                  </p>
+                  <div className="flex items-stretch gap-2 h-9">
+                    <input 
+                      type="email" 
+                      placeholder="Enter your email" 
+                      className="flex-1 bg-[#fdf8f0] border border-[#eee5d8] rounded-lg px-3 text-xs text-[#14332a] placeholder:text-[#a1b3ac] focus:outline-none focus:border-[#6ee7a0] focus:ring-1 focus:ring-[#6ee7a0]/20 transition-all min-w-0"
+                    />
+                    <button className="bg-[#14332a] text-white px-3.5 rounded-lg text-xs font-semibold hover:bg-[#1a4237] transition shrink-0 shadow-2xs">
+                      Subscribe
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Bottom Bar */}
+            <div className="mt-12 pt-6 border-t border-[#eee5d8] flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-medium text-[#7a8f87]">
+              <p>&copy; {new Date().getFullYear()} RoleFit. All rights reserved.</p>
+              
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-[#14332a]" />
+                <span>Your data is secure & never shared.</span>
+              </div>
+
+              <div className="flex items-center gap-1.5">
+                <span>Made with</span>
+                <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
+                <span>for job seekers worldwide</span>
+              </div>
+            </div>
+
+          </div>
+        </footer>
       </div>
 
       {/* Toast Notification Container */}
