@@ -1,0 +1,8 @@
+{
+  "name": "Remix ResumeMatch",
+  "description": "Privacy-first AI resume gap analysis and career tailoring platform with real-time grounding, dual-provider AI orchestration, and ATS diagnostics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
