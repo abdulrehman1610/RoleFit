@@ -32,30 +32,12 @@ export default function App() {
   const [isProModalOpen, setIsProModalOpen] = useState(false);
   const [isOnline, setIsOnline] = useState(typeof navigator !== "undefined" ? navigator.onLine : true);
 
-  const [theme, setTheme] = useState<"dark" | "light">(() => {
-    try {
-      return (localStorage.getItem("resumematch_theme") as "dark" | "light") || "light";
-    } catch (e) {
-      return "light";
-    }
-  });
-
   useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-      document.documentElement.classList.remove("light");
-    } else {
-      document.documentElement.classList.add("light");
-      document.documentElement.classList.remove("dark");
-    }
     try {
-      localStorage.setItem("resumematch_theme", theme);
+      document.documentElement.classList.remove("dark");
+      localStorage.removeItem("resumematch_theme");
     } catch (e) {}
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
-  };
+  }, []);
 
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
   const [analysisStage, setAnalysisStage] = useState<string>("Evaluating Match & ATS Alignment...");
@@ -191,7 +173,7 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen ${theme === "dark" ? "bg-[#080D1A] text-slate-200" : "bg-[#fdf8f0] text-[#14332a]"} antialiased transition-colors duration-200 overflow-x-hidden`}>
+    <div className="min-h-screen bg-[#fdf8f0] text-[#14332a] antialiased overflow-x-hidden">
       <div className="max-w-[1440px] mx-auto px-3.5 sm:px-6 lg:px-8 py-4 sm:py-6">
         {/* Top Floating Action Bar (Navbar) */}
         <Navbar
@@ -199,8 +181,6 @@ export default function App() {
           onOpenSettings={() => setIsConfigOpen(true)}
           onOpenHistory={() => setIsHistoryOpen(true)}
           onLoadSample={handleLoadSample}
-          theme={theme}
-          onToggleTheme={toggleTheme}
         />
 
         {/* Offline Banner if disconnected */}
@@ -264,6 +244,8 @@ export default function App() {
                 <AnalysisDashboard
                   result={analysisResult}
                   sourceResumeText={resumeText}
+                  jobDescription={jobDescription}
+                  settings={settings}
                   activeTab={activeTab}
                   setActiveTab={setActiveTab}
                   onShowToast={showToast}

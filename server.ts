@@ -60,7 +60,7 @@ async function startServer() {
         "gemini-3.7-flash",
       ]));
 
-      const systemPrompt = `You are ResumeMatch, an elite Principal Career Architect and ATS Gap Analysis Engine.
+      const systemPrompt = `You are RoleFit, an elite Principal Career Architect and ATS Gap Analysis Engine.
 Your role is to perform an exhaustive, evidence-based, factual gap analysis between a Candidate Resume and a Target Job Description.
 
 Rules:
@@ -218,7 +218,7 @@ Return pure JSON matching this exact structure:
         "llama-3.1-8b-instant",
       ]));
 
-      const systemPrompt = `You are ResumeMatch, an elite Principal Career Architect and ATS Gap Analysis Engine.
+      const systemPrompt = `You are RoleFit, an elite Principal Career Architect and ATS Gap Analysis Engine.
 Your role is to perform an exhaustive, evidence-based, factual gap analysis between a Candidate Resume and a Target Job Description.
 
 Rules:
@@ -323,6 +323,138 @@ Return pure JSON matching this exact structure:
         error: err.message || "Failed to analyze resume with Groq",
         details: String(err),
       });
+    }
+  });
+
+  // Server-side Cover Letter Generation endpoint
+  app.post("/api/generate-cover-letter", async (req, res) => {
+    try {
+      const { resumeText, jobDescription, tone = "confident", clientApiKey, clientGroqKey, customModel } = req.body;
+
+      if (!resumeText || !jobDescription) {
+        return res.status(400).json({ error: "resumeText and jobDescription are required" });
+      }
+
+      const toneInstructions = {
+        confident: "Direct, results-driven, crisp metrics, bold value proposition demonstrating immediate ROI.",
+        enthusiastic: "Modern, collaborative, highly passionate about the company mission, technical velocity, and team culture.",
+        executive: "Strategic, authoritative systems thinking, organizational leadership, and high-level architectural impact.",
+      };
+
+      const selectedToneGuidance = toneInstructions[tone as keyof typeof toneInstructions] || toneInstructions.confident;
+
+      const prompt = `You are RoleFit, an elite Executive Career Architect.
+Write a compelling, tailored, high-converting 3-paragraph cover letter for a candidate applying to the specified target job.
+
+TONE: ${tone.toUpperCase()} — ${selectedToneGuidance}
+
+STRICT EVIDENCE-BASED RULES:
+1. Grounding: Reference ONLY real achievements, skills, and metrics substantiated in the Candidate Resume. NEVER invent fake companies, degrees, or unverifiable claims.
+2. Structure:
+   - Header & Salutation (e.g., Dear Hiring Team at [Company Name or Target Organization],)
+   - Paragraph 1 (The Hook): State the target position immediately, articulate a clear value proposition, and show authentic alignment.
+   - Paragraph 2 (Demonstrated Impact): Highlight 2-3 specific, quantified achievements from the resume that directly answer key requirements in the job description.
+   - Paragraph 3 (Strategic Forward-Looking Fit): Explain how the candidate will solve the team's immediate challenges and contribute to technical velocity.
+   - Professional Sign-off (Sincerely, [Candidate Name])
+3. Length: ~250 - 350 words. Crisp, engaging, zero boilerplate fluff.
+
+Candidate Resume:
+"""
+${resumeText}
+"""
+
+Target Job Description:
+"""
+${jobDescription}
+"""
+
+Output the pure, formatted cover letter text directly without markdown commentary or conversational preamble.`;
+
+      const geminiKey = clientApiKey || process.env.GEMINI_API_KEY;
+      const groqKey = clientGroqKey || process.env.GROQ_API_KEY;
+
+      // 1. Try Gemini first
+      if (geminiKey) {
+        try {
+          const ai = new GoogleGenAI({
+            apiKey: geminiKey,
+            httpOptions: { headers: { "User-Agent": "aistudio-build" } },
+          });
+
+          const modelCandidates = Array.from(new Set([
+            customModel || "gemini-2.5-flash",
+            "gemini-2.5-flash",
+            "gemini-2.0-flash",
+            "gemini-1.5-flash",
+            "gemini-3.7-flash",
+          ]));
+
+          for (const modelName of modelCandidates) {
+            try {
+              const response = await ai.models.generateContent({
+                model: modelName,
+                contents: [{ role: "user", parts: [{ text: prompt }] }],
+                config: {
+                  temperature: 0.3,
+                  maxOutputTokens: 4096,
+                },
+              });
+
+              if (response.text && response.text.trim().length > 80) {
+                return res.json({ cover_letter: response.text.trim(), provider: "Gemini" });
+              }
+            } catch (err: any) {
+              console.warn(`[Gemini Cover Letter ${modelName} Failed]:`, err.message);
+            }
+          }
+        } catch (geminiErr: any) {
+          console.warn("[Cover Letter Gemini Error]:", geminiErr.message);
+        }
+      }
+
+      // 2. Try Groq fallback
+      if (groqKey) {
+        const groqCandidates = [
+          "openai/gpt-oss-120b",
+          "openai/gpt-oss-20b",
+          "llama-3.3-70b-versatile",
+          "llama-3.1-8b-instant",
+        ];
+
+        for (const currentGroqModel of groqCandidates) {
+          try {
+            const groqRes = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${groqKey.trim()}`,
+              },
+              body: JSON.stringify({
+                model: currentGroqModel,
+                messages: [{ role: "user", content: prompt }],
+                temperature: 0.3,
+                max_tokens: 2048,
+              }),
+            });
+
+            if (groqRes.ok) {
+              const data = await groqRes.json();
+              const content = data.choices?.[0]?.message?.content;
+              if (content && content.trim().length > 80) {
+                return res.json({ cover_letter: content.trim(), provider: "Groq" });
+              }
+            }
+          } catch (groqErr: any) {
+            console.warn(`[Cover Letter Groq ${currentGroqModel} Error]:`, groqErr.message);
+          }
+        }
+      }
+
+      // 3. If both external APIs failed or unconfigured, return error to trigger client mock
+      return res.status(503).json({ error: "External AI providers unavailable for cover letter generation." });
+    } catch (e: any) {
+      console.error("[Cover Letter Route Error]:", e);
+      return res.status(500).json({ error: e.message });
     }
   });
 

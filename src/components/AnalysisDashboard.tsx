@@ -7,7 +7,7 @@ import {
   Download,
   Sparkles,
 } from "lucide-react";
-import { AnalysisResult } from "../types";
+import { AnalysisResult, AISettings } from "../types";
 import { QuickOverviewGrid } from "./QuickOverviewGrid";
 import { GapAnalysisTab } from "./GapAnalysisTab";
 import { BulletOptimizerTab } from "./BulletOptimizerTab";
@@ -20,6 +20,8 @@ export type DashboardTab = "dashboard" | "gap" | "bullets" | "ats" | "export";
 interface AnalysisDashboardProps {
   result: AnalysisResult;
   sourceResumeText: string;
+  jobDescription?: string;
+  settings?: AISettings;
   activeTab: DashboardTab;
   setActiveTab: (tab: DashboardTab) => void;
   onShowToast?: (text: string, type: "info" | "warning" | "error" | "success") => void;
@@ -29,6 +31,8 @@ interface AnalysisDashboardProps {
 export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({
   result,
   sourceResumeText,
+  jobDescription = "",
+  settings,
   activeTab,
   setActiveTab,
   onShowToast,
@@ -151,6 +155,8 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({
             <ExportHubTab
               result={result}
               sourceResumeText={sourceResumeText}
+              jobDescription={jobDescription}
+              settings={settings}
               selectedBulletIndices={selectedBulletIndices}
               onToggleBulletSelect={handleToggleBullet}
               onShowToast={onShowToast}

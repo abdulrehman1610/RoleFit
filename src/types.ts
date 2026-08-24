@@ -18,6 +18,8 @@ export interface RewriteSuggestion {
   matched_tokens?: string[];
 }
 
+export type CoverLetterTone = "confident" | "enthusiastic" | "executive";
+
 export interface AnalysisResult {
   matched_skills: string[];
   missing_skills: string[];
@@ -40,6 +42,7 @@ export interface AnalysisResult {
     resume_words: number;
     job_words: number;
   };
+  cover_letter?: string;
 }
 
 export interface AISettings {
