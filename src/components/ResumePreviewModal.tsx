@@ -4,14 +4,9 @@ import {
   Printer,
   Copy,
   Check,
-  Download,
   FileText,
   Sliders,
-  Type,
-  Layout,
-  ExternalLink,
-  Sparkles,
-  BookOpen
+  CheckCircle2
 } from "lucide-react";
 import { parseResumeToStructure, StructuredResume } from "../utils/resumeParser";
 import { safeCopyToClipboard } from "../utils/safeHelpers";
@@ -205,31 +200,31 @@ export const ResumePreviewModal: React.FC<ResumePreviewModalProps> = ({
     }
   };
 
-  // Density styles
+  // Density styles for interactive canvas preview
   const densityStyles = {
     compact: {
       fontSize: "text-[11px] leading-[1.35]",
-      headerSize: "text-lg",
-      sectionHeaderSize: "text-[12px]",
+      headerSize: "text-base sm:text-lg",
+      sectionHeaderSize: "text-[11px] sm:text-[12px]",
       itemSpacing: "space-y-2",
       sectionSpacing: "space-y-2.5",
-      padding: "p-6 sm:p-8",
+      padding: "p-4 xs:p-6 sm:p-8",
     },
     regular: {
-      fontSize: "text-[12px] leading-[1.45]",
-      headerSize: "text-xl",
-      sectionHeaderSize: "text-[13px]",
-      itemSpacing: "space-y-3",
-      sectionSpacing: "space-y-4",
-      padding: "p-8 sm:p-12",
+      fontSize: "text-[11.5px] sm:text-[12px] leading-[1.45]",
+      headerSize: "text-lg sm:text-xl",
+      sectionHeaderSize: "text-[12px] sm:text-[13px]",
+      itemSpacing: "space-y-2.5 sm:space-y-3",
+      sectionSpacing: "space-y-3 sm:space-y-4",
+      padding: "p-4 xs:p-6 sm:p-12",
     },
     spacious: {
-      fontSize: "text-[13px] leading-[1.6]",
-      headerSize: "text-2xl",
-      sectionHeaderSize: "text-[14px]",
-      itemSpacing: "space-y-4",
-      sectionSpacing: "space-y-5",
-      padding: "p-10 sm:p-14",
+      fontSize: "text-[12px] sm:text-[13px] leading-[1.6]",
+      headerSize: "text-xl sm:text-2xl",
+      sectionHeaderSize: "text-[13px] sm:text-[14px]",
+      itemSpacing: "space-y-3.5 sm:space-y-4",
+      sectionSpacing: "space-y-4 sm:space-y-5",
+      padding: "p-5 xs:p-7 sm:p-14",
     },
   }[density];
 
@@ -247,8 +242,8 @@ export const ResumePreviewModal: React.FC<ResumePreviewModalProps> = ({
       case "stanford":
         return {
           font: "font-sans",
-          headerClass: "text-left pb-3 border-b-2 border-[#14332a]",
-          sectionHeaderClass: "font-extrabold uppercase tracking-wider text-[#14332a] border-b border-[#14332a]/30 pb-1 mb-2",
+          headerClass: "text-left pb-2.5 border-b-2 border-[#14332a]",
+          sectionHeaderClass: "font-extrabold uppercase tracking-wider text-[#14332a] border-b border-[#14332a]/30 pb-0.5 mb-1.5",
           nameClass: "font-extrabold tracking-tight text-[#14332a]",
           bulletClass: "list-disc ml-4 space-y-1 text-slate-800",
         };
@@ -267,31 +262,42 @@ export const ResumePreviewModal: React.FC<ResumePreviewModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/50 backdrop-blur-sm animate-fade-in font-simple">
-      <div className="w-full max-w-5xl bg-[#f8f6f0] border border-[#eee5d8] rounded-[28px] shadow-[0_30px_70px_rgba(0,0,0,0.18)] overflow-hidden flex flex-col max-h-[94vh]">
-        {/* Top Controls Toolbar (Hidden during actual print) */}
-        <div className="no-print px-4 sm:px-6 py-3.5 border-b border-[#eee5d8] bg-white flex flex-wrap items-center justify-between gap-3 shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-[#fde9d9] flex items-center justify-center text-[#e07a4f] shrink-0">
-              <FileText className="w-4 h-4" />
+      <div className="w-full max-w-5xl bg-[#f8f6f0] border border-[#eee5d8] rounded-[24px] sm:rounded-[28px] shadow-[0_30px_70px_rgba(0,0,0,0.18)] overflow-hidden flex flex-col max-h-[96vh] sm:max-h-[94vh]">
+        {/* Top Controls Toolbar */}
+        <div className="px-4 sm:px-6 py-3 border-b border-[#eee5d8] bg-white space-y-2.5 shrink-0">
+          {/* Header Row: Title & Close */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-full bg-[#fde9d9] flex items-center justify-center text-[#e07a4f] shrink-0">
+                <FileText className="w-4 h-4" />
+              </div>
+              <div>
+                <h2 className="text-xs sm:text-sm font-bold text-[#14332a] uppercase tracking-wider">
+                  ATS Resume Preview
+                </h2>
+                <p className="text-[10px] sm:text-[11px] text-[#7a8f87] hidden xs:block">
+                  Harvard & Stanford single-column standard
+                </p>
+              </div>
             </div>
-            <div>
-              <h2 className="text-sm font-bold text-[#14332a] uppercase tracking-wider">
-                Print-Ready ATS Resume Preview
-              </h2>
-              <p className="text-[11px] text-[#7a8f87]">
-                Harvard & Stanford single-column standard (100% ATS parser compliant)
-              </p>
-            </div>
+
+            <button
+              type="button"
+              onClick={onClose}
+              className="w-8 h-8 rounded-full bg-[#fdf8f0] border border-[#eee5d8] flex items-center justify-center text-[#7a8f87] hover:text-[#14332a] hover:bg-stone-100 transition cursor-pointer shrink-0"
+            >
+              <X className="w-4 h-4" />
+            </button>
           </div>
 
-          {/* Template & Density Switchers */}
-          <div className="flex flex-wrap items-center gap-2">
+          {/* Controls Row: Template Pills & Density */}
+          <div className="flex items-center justify-between gap-2 pt-1 border-t border-[#f5ece0]">
             {/* Template Selector Pills */}
-            <div className="flex items-center gap-1 p-1 bg-[#fdf8f0] rounded-full border border-[#eee5d8]">
+            <div className="flex items-center gap-1 p-1 bg-[#fdf8f0] rounded-full border border-[#eee5d8] w-full sm:w-auto justify-center sm:justify-start">
               <button
                 type="button"
                 onClick={() => setTemplate("harvard")}
-                className={`px-3 py-1 rounded-full text-xs font-semibold transition cursor-pointer ${
+                className={`flex-1 sm:flex-none px-3 py-1 rounded-full text-xs font-semibold transition cursor-pointer text-center ${
                   template === "harvard"
                     ? "bg-[#14332a] text-white shadow-2xs"
                     : "text-[#7a8f87] hover:text-[#14332a]"
@@ -302,7 +308,7 @@ export const ResumePreviewModal: React.FC<ResumePreviewModalProps> = ({
               <button
                 type="button"
                 onClick={() => setTemplate("stanford")}
-                className={`px-3 py-1 rounded-full text-xs font-semibold transition cursor-pointer ${
+                className={`flex-1 sm:flex-none px-3 py-1 rounded-full text-xs font-semibold transition cursor-pointer text-center ${
                   template === "stanford"
                     ? "bg-[#14332a] text-white shadow-2xs"
                     : "text-[#7a8f87] hover:text-[#14332a]"
@@ -313,7 +319,7 @@ export const ResumePreviewModal: React.FC<ResumePreviewModalProps> = ({
               <button
                 type="button"
                 onClick={() => setTemplate("tech")}
-                className={`px-3 py-1 rounded-full text-xs font-semibold transition cursor-pointer ${
+                className={`flex-1 sm:flex-none px-3 py-1 rounded-full text-xs font-semibold transition cursor-pointer text-center ${
                   template === "tech"
                     ? "bg-[#14332a] text-white shadow-2xs"
                     : "text-[#7a8f87] hover:text-[#14332a]"
@@ -323,7 +329,7 @@ export const ResumePreviewModal: React.FC<ResumePreviewModalProps> = ({
               </button>
             </div>
 
-            {/* Density Selector */}
+            {/* Density Selector (Desktop / Tablet) */}
             <div className="hidden sm:flex items-center gap-1 p-1 bg-[#fdf8f0] rounded-full border border-[#eee5d8]">
               {(["compact", "regular", "spacious"] as ResumeDensity[]).map((d) => (
                 <button
@@ -340,36 +346,16 @@ export const ResumePreviewModal: React.FC<ResumePreviewModalProps> = ({
                 </button>
               ))}
             </div>
-
-            {/* Print / Export Action Button */}
-            <button
-              type="button"
-              onClick={handlePrint}
-              id="modal-print-pdf-btn"
-              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#14332a] hover:bg-[#0f2d22] text-white text-xs font-bold shadow-[0_4px_12px_rgba(20,51,42,0.18)] transition active:scale-98 cursor-pointer"
-            >
-              <Printer className="w-3.5 h-3.5 text-[#fde9d9]" />
-              <span>Print / Save PDF</span>
-            </button>
-
-            {/* Close Button */}
-            <button
-              type="button"
-              onClick={onClose}
-              className="w-8 h-8 rounded-full bg-[#fdf8f0] border border-[#eee5d8] flex items-center justify-center text-[#7a8f87] hover:text-[#14332a] hover:bg-stone-100 transition cursor-pointer shrink-0 ml-1"
-            >
-              <X className="w-4 h-4" />
-            </button>
           </div>
         </div>
 
         {/* Scrollable Printable Document Canvas */}
-        <div className="p-3 sm:p-8 overflow-y-auto flex justify-center bg-[#eae4d9] custom-scroll">
+        <div className="flex-1 min-h-0 p-2.5 sm:p-8 overflow-y-auto flex justify-center items-start bg-[#eae4d9] custom-scroll">
           {/* Authentic 8.5" x 11" Paper Canvas */}
           <div
             ref={printRef}
             id="printable-resume-canvas"
-            className={`print-container w-full max-w-[816px] min-h-[1056px] bg-white text-black shadow-xl border border-stone-200 ${densityStyles.padding} ${densityStyles.fontSize} ${tClasses.font} transition-all`}
+            className={`w-full max-w-[816px] bg-white text-black shadow-xl border border-stone-200 rounded-lg sm:rounded-none ${densityStyles.padding} ${densityStyles.fontSize} ${tClasses.font} transition-all`}
           >
             {/* 1. Header (Name, Title, Contact Info) */}
             <div className={tClasses.headerClass}>
@@ -377,12 +363,12 @@ export const ResumePreviewModal: React.FC<ResumePreviewModalProps> = ({
                 {parsedResume.name}
               </h1>
               {parsedResume.headline && (
-                <div className="text-[13px] font-semibold text-stone-700 tracking-normal mb-1">
+                <div className="text-[12px] sm:text-[13px] font-semibold text-stone-700 tracking-normal mb-1">
                   {parsedResume.headline}
                 </div>
               )}
               {parsedResume.contactDetails.length > 0 && (
-                <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-0.5 text-[11px] text-stone-600">
+                <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-0.5 text-[10px] sm:text-[11px] text-stone-600">
                   {parsedResume.contactDetails.map((contact, idx) => (
                     <React.Fragment key={idx}>
                       <span>{contact}</span>
@@ -394,7 +380,7 @@ export const ResumePreviewModal: React.FC<ResumePreviewModalProps> = ({
             </div>
 
             {/* 2. Structured Sections */}
-            <div className={`mt-4 ${densityStyles.sectionSpacing}`}>
+            <div className={`mt-3 sm:mt-4 ${densityStyles.sectionSpacing}`}>
               {parsedResume.sections.map((section, sIdx) => (
                 <div key={sIdx} className="avoid-break">
                   {/* Section Title */}
@@ -415,7 +401,7 @@ export const ResumePreviewModal: React.FC<ResumePreviewModalProps> = ({
                               )}
                             </div>
                             {item.date && (
-                              <div className="text-[11px] font-medium text-stone-600 whitespace-nowrap shrink-0">
+                              <div className="text-[10px] sm:text-[11px] font-medium text-stone-600 whitespace-nowrap shrink-0">
                                 {item.date}
                               </div>
                             )}
@@ -423,7 +409,7 @@ export const ResumePreviewModal: React.FC<ResumePreviewModalProps> = ({
 
                           {/* Bullets */}
                           {item.bullets && item.bullets.length > 0 && (
-                            <ul className={`mt-1.5 ${tClasses.bulletClass}`}>
+                            <ul className={`mt-1 sm:mt-1.5 ${tClasses.bulletClass}`}>
                               {item.bullets.map((b, bIdx) => (
                                 <li key={bIdx} className="leading-snug">
                                   {b}
@@ -452,18 +438,18 @@ export const ResumePreviewModal: React.FC<ResumePreviewModalProps> = ({
           </div>
         </div>
 
-        {/* Footer Actions */}
-        <div className="no-print px-6 py-3 border-t border-[#eee5d8] bg-white flex items-center justify-between text-xs text-[#7a8f87]">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#2d6a4f]"></span>
+        {/* Responsive Mobile-Optimized Footer Actions */}
+        <div className="px-4 sm:px-6 py-3 border-t border-[#eee5d8] bg-white flex items-center justify-between gap-2.5 shrink-0">
+          <div className="hidden md:flex items-center gap-2 text-xs text-[#7a8f87]">
+            <CheckCircle2 className="w-4 h-4 text-[#2d6a4f]" />
             <span>Formatted with active STAR replacements</span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto">
             <button
               type="button"
               onClick={handleCopy}
-              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#fdf8f0] hover:bg-[#f6eee3] border border-[#eee5d8] text-xs font-semibold text-[#14332a] transition active:scale-98 cursor-pointer"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full bg-[#fdf8f0] hover:bg-[#f6eee3] border border-[#eee5d8] text-xs font-semibold text-[#14332a] transition active:scale-98 cursor-pointer"
             >
               {copied ? (
                 <>
@@ -480,10 +466,10 @@ export const ResumePreviewModal: React.FC<ResumePreviewModalProps> = ({
             <button
               type="button"
               onClick={handlePrint}
-              className="inline-flex items-center gap-1.5 px-5 py-1.5 rounded-full bg-[#14332a] hover:bg-[#0f2d22] text-white text-xs font-bold transition active:scale-98 cursor-pointer"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-full bg-[#14332a] hover:bg-[#0f2d22] text-white text-xs font-bold transition active:scale-98 cursor-pointer whitespace-nowrap"
             >
               <Printer className="w-3.5 h-3.5 text-[#fde9d9]" />
-              <span>Print / Download PDF</span>
+              <span>Print / Save PDF</span>
             </button>
           </div>
         </div>
