@@ -97,6 +97,22 @@
   border-radius: 9999px;
 }
 
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Touch smooth scrolling */
+.smooth-touch-scroll {
+  -webkit-overflow-scrolling: touch;
+}
+
 /* Botanical Background Texture pattern */
 .bg-botanical-pattern {
   background-image: radial-gradient(circle at 100% 0%, rgba(224, 122, 95, 0.08) 0%, transparent 40%),

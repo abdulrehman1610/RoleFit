@@ -71,8 +71,8 @@ export const ExportHubTab: React.FC<ExportHubTabProps> = ({
     try {
       const reportData = {
         meta: {
-          application: "ResumeMatch",
-          version: "2.5",
+          application: "RoleFit",
+          version: "1.0",
           timestamp: result.timestamp || new Date().toISOString(),
         },
         telemetry: {
@@ -101,7 +101,7 @@ export const ExportHubTab: React.FC<ExportHubTabProps> = ({
 
       const res = safeDownloadFile(
         JSON.stringify(reportData, null, 2),
-        `ResumeMatch_Report_${new Date().toISOString().slice(0, 10)}.json`,
+        `RoleFit_Report_${new Date().toISOString().slice(0, 10)}.json`,
         "application/json"
       );
 

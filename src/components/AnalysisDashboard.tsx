@@ -67,7 +67,7 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({
   return (
     <div className="space-y-6 pt-2 font-simple">
       {/* Horizontal Tab Navigation Bar (Under Input & CTA Section) */}
-      <div className="flex items-center gap-1 sm:gap-2 border-b border-[#eee5d8] dark:border-[#1C2638] pb-px overflow-x-auto custom-scroll -mx-1 px-1">
+      <div className="flex items-center gap-1 sm:gap-2 border-b border-[#eee5d8] dark:border-[#1C2638] pb-px overflow-x-auto no-scrollbar smooth-touch-scroll -mx-1 px-1">
         {subTabs.map((tab) => {
           const isActive = activeTab === tab.id;
           return (

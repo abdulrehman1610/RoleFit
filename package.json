@@ -1,7 +1,8 @@
 {
-  "name": "react-example",
+  "name": "rolefit",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Smart Matches. Better Opportunities. Evidence-Grounded AI Resume Tailoring & ATS Diagnostics",
   "type": "module",
   "scripts": {
     "dev": "tsx watch server.ts",

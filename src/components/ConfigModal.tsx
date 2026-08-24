@@ -108,7 +108,7 @@ export const ConfigModal: React.FC<ConfigModalProps> = ({
                 Default Mode: Shared Free Student Server
               </div>
               <p className="text-[12px] text-[#3b4f48] dark:text-slate-300 leading-relaxed font-medium">
-                ResumeMatch is pre-configured and funded for student welfare. You do not need any API key to run gap analyses or STAR bullet optimizations.
+                RoleFit is pre-configured and funded for student welfare. You do not need any API key to run gap analyses or STAR bullet optimizations.
               </p>
             </div>
           </div>

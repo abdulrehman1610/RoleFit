@@ -37,7 +37,7 @@ export const ProUpgradeModal: React.FC<ProUpgradeModalProps> = ({
             <Gem className="w-6 h-6" />
           </div>
 
-          <h3 className="text-2xl font-bold font-heading text-white">ResumeMatch Pro</h3>
+          <h3 className="text-2xl font-bold font-heading text-white">RoleFit Pro</h3>
           <p className="text-xs text-emerald-100 font-normal mt-1 max-w-xs mx-auto">
             Supercharge your career readiness with precision AI resume optimization.
           </p>

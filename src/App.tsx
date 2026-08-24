@@ -191,8 +191,8 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen ${theme === "dark" ? "bg-[#080D1A] text-slate-200" : "bg-[#fdf8f0] text-[#14332a]"} antialiased transition-colors duration-200`}>
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div className={`min-h-screen ${theme === "dark" ? "bg-[#080D1A] text-slate-200" : "bg-[#fdf8f0] text-[#14332a]"} antialiased transition-colors duration-200 overflow-x-hidden`}>
+      <div className="max-w-[1440px] mx-auto px-3.5 sm:px-6 lg:px-8 py-4 sm:py-6">
         {/* Top Floating Action Bar (Navbar) */}
         <Navbar
           settings={settings}
@@ -207,7 +207,7 @@ export default function App() {
         {!isOnline && (
           <div className="bg-amber-500 text-white px-4 py-2 text-xs font-semibold flex items-center justify-center gap-2 font-simple shadow-xs mb-6 rounded-2xl">
             <WifiOff className="w-4 h-4" />
-            <span>You are currently offline. ResumeMatch is operating in Instant Local Analysis mode.</span>
+            <span>You are currently offline. RoleFit is operating in Instant Local Analysis mode.</span>
           </div>
         )}
 

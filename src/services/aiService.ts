@@ -3,7 +3,7 @@ import { runGuardPipeline } from "../utils/guard";
 import { validateAndSanitizeAnalysisResult } from "../utils/schemaValidator";
 import { MOCK_ANALYSIS_RESULT } from "../data/sampleData";
 
-const SYSTEM_PROMPT = `You are ResumeMatch, an elite Principal Career Architect and ATS Gap Analysis Engine.
+const SYSTEM_PROMPT = `You are RoleFit, an elite Principal Career Architect and ATS Gap Analysis Engine.
 Perform an exhaustive, factual gap analysis between Candidate Resume and Target Job Description.
 
 STRICT RULES:

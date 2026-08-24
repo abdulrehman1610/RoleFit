@@ -145,52 +145,52 @@ export const InputSection: React.FC<InputSectionProps> = ({
       {/* Dual Input Cards Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
         {/* Left Card: Resume Source */}
-        <div className="bg-white dark:bg-[#0F1626] rounded-[24px] border border-[#eee5d8] dark:border-[#1C2638] p-5 lg:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col justify-between transition-colors">
+        <div className="bg-white dark:bg-[#0F1626] rounded-[24px] border border-[#eee5d8] dark:border-[#1C2638] p-4 sm:p-5 lg:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col justify-between transition-colors">
           <div className="space-y-4">
             {/* Header */}
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex gap-3">
-                  <div className="w-9 h-9 rounded-full bg-[#fdf0e2] dark:bg-[#341F1A] border border-[#f5dcc2] dark:border-[#4A2C24] flex items-center justify-center shrink-0">
-                    <FileText className="w-4 h-4 text-[#e07a4f]" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-[12px] tracking-[0.12em] uppercase text-stone-900 dark:text-white">
-                      Resume Source
-                    </h3>
-                    <p className="text-[12px] text-[#8aa099] dark:text-slate-400 mt-0.5">
-                      Upload PDF/DOCX or paste raw resume text
-                    </p>
-                  </div>
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full bg-[#fdf0e2] dark:bg-[#341F1A] border border-[#f5dcc2] dark:border-[#4A2C24] flex items-center justify-center shrink-0">
+                  <FileText className="w-4 h-4 text-[#e07a4f]" />
                 </div>
+                <div>
+                  <h3 className="font-bold text-[12px] tracking-[0.12em] uppercase text-stone-900 dark:text-white">
+                    Resume Source
+                  </h3>
+                  <p className="text-[12px] text-[#8aa099] dark:text-slate-400 mt-0.5">
+                    Upload PDF/DOCX or paste raw resume text
+                  </p>
+                </div>
+              </div>
 
               {/* Mode Toggle Buttons */}
-              <div className="flex gap-2 self-start sm:self-auto">
+              <div className="flex items-center gap-2 self-stretch sm:self-auto">
                 <button
                   type="button"
                   onClick={() => {
                     setInputMode("upload");
                     fileInputRef.current?.click();
                   }}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-[12px] transition cursor-pointer ${
+                  className={`flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full border text-[12px] transition cursor-pointer ${
                     inputMode === "upload"
                       ? "bg-[#e6f0e6] dark:bg-[#132A1F] text-[#2d6a4f] dark:text-[#4ADE80] border-[#d2e3d2] dark:border-[#1E4D38] font-semibold"
                       : "bg-white dark:bg-[#0F1626] text-stone-600 dark:text-slate-400 border-[#e6ddd0] dark:border-[#2C384D] font-medium"
                   }`}
                 >
                   <Upload className="w-3.5 h-3.5" />
-                  <span>Upload File</span>
+                  <span>Upload</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setInputMode("paste")}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-[12px] transition cursor-pointer ${
+                  className={`flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full border text-[12px] transition cursor-pointer ${
                     inputMode === "paste"
                       ? "bg-[#fde9d9] dark:bg-[#341F1A] text-[#e07a4f] dark:text-[#E88463] border-[#f5cbb2] dark:border-[#4A2C24] font-semibold"
                       : "bg-white dark:bg-[#0F1626] text-stone-600 dark:text-slate-400 border-[#e6ddd0] dark:border-[#2C384D] font-medium"
                   }`}
                 >
                   <ClipboardPaste className="w-3.5 h-3.5" />
-                  <span>Paste Text</span>
+                  <span>Paste</span>
                 </button>
               </div>
             </div>
@@ -288,32 +288,32 @@ export const InputSection: React.FC<InputSectionProps> = ({
         </div>
 
         {/* Right Card: Target Role Specification */}
-        <div className="bg-white dark:bg-[#0F1626] rounded-[24px] border border-[#eee5d8] dark:border-[#1C2638] p-5 lg:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col justify-between transition-colors">
+        <div className="bg-white dark:bg-[#0F1626] rounded-[24px] border border-[#eee5d8] dark:border-[#1C2638] p-4 sm:p-5 lg:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col justify-between transition-colors">
           <div className="space-y-4">
             {/* Header */}
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex gap-3">
-                  <div className="w-9 h-9 rounded-full bg-[#fdf0e2] dark:bg-[#341F1A] border border-[#f5dcc2] dark:border-[#4A2C24] flex items-center justify-center shrink-0">
-                    <Briefcase className="w-4 h-4 text-[#e07a4f]" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-[12px] tracking-[0.12em] uppercase text-stone-900 dark:text-white">
-                      Target Role Specification
-                    </h3>
-                    <p className="text-[12px] text-[#8aa099] dark:text-slate-400 mt-0.5">
-                      Paste the official job description or requirement list
-                    </p>
-                  </div>
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full bg-[#fdf0e2] dark:bg-[#341F1A] border border-[#f5dcc2] dark:border-[#4A2C24] flex items-center justify-center shrink-0">
+                  <Briefcase className="w-4 h-4 text-[#e07a4f]" />
                 </div>
+                <div>
+                  <h3 className="font-bold text-[12px] tracking-[0.12em] uppercase text-stone-900 dark:text-white">
+                    Target Role Specification
+                  </h3>
+                  <p className="text-[12px] text-[#8aa099] dark:text-slate-400 mt-0.5">
+                    Paste the official job description or requirement list
+                  </p>
+                </div>
+              </div>
 
               {/* Load Sample Button */}
-              <div className="relative self-start sm:self-auto">
+              <div className="relative self-stretch sm:self-auto">
                 <button
                   type="button"
                   onClick={() => setShowSampleDropdown(!showSampleDropdown)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#fdf0e2] dark:bg-[#341F1A] border border-[#f5dcc2] dark:border-[#4A2C24] text-[12px] font-semibold text-[#c26a3a] dark:text-[#E88463] transition cursor-pointer shadow-sm hover:bg-[#FDE7DB] dark:hover:bg-slate-800"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full bg-[#fdf0e2] dark:bg-[#341F1A] border border-[#f5dcc2] dark:border-[#4A2C24] text-[12px] font-semibold text-[#c26a3a] dark:text-[#E88463] transition cursor-pointer shadow-2xs hover:bg-[#FDE7DB] dark:hover:bg-slate-800"
                 >
-                  <FileUp className="w-3.5 h-3.5" /> Load Sample
+                  <FileUp className="w-3.5 h-3.5" /> <span>Load Sample</span>
                 </button>
 
                 {showSampleDropdown && (
@@ -349,13 +349,22 @@ export const InputSection: React.FC<InputSectionProps> = ({
               </div>
             </div>
 
-            {/* Textarea for Job Description */}
-            <div className="mt-5 rounded-[18px] bg-[#fffdf8] dark:bg-[#0B101D] border border-[#eee5d8] dark:border-[#1C2638] p-4">
+            {/* Input Card Container */}
+            <div className="mt-5 rounded-[18px] bg-[#fffdf8] dark:bg-[#0B101D] border border-[#eee5d8] dark:border-[#1C2638] p-4 transition-colors">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[10px] font-bold tracking-[0.14em] text-[#8aa099] uppercase">
+                  Job Description Text
+                </span>
+                <span className="text-[11px] font-bold text-[#c26a3a] dark:text-[#E88463]">
+                  {jobWords} Words
+                </span>
+              </div>
+
               <textarea
                 value={jobDescription}
                 onChange={(e) => setJobDescription(e.target.value)}
                 placeholder="Paste the job requirements, responsibilities, and qualifications..."
-                className="w-full h-44 bg-transparent text-[12px] leading-[18px] text-[#3b4f48] dark:text-slate-200 placeholder-stone-400 focus:outline-none resize-none transition custom-scroll"
+                className="w-full h-40 sm:h-44 bg-transparent text-[12px] leading-[18px] text-[#3b4f48] dark:text-slate-200 placeholder-stone-400 focus:outline-none resize-none transition custom-scroll"
               />
               
               <div className="mt-4 flex items-center justify-between pt-3 border-t border-dashed border-[#e8ddd0] dark:border-slate-800">
@@ -378,13 +387,13 @@ export const InputSection: React.FC<InputSectionProps> = ({
       </div>
 
       {/* Central Analyze CTA Button Under Upload & JD Section */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2 sm:pt-4">
         <button
           type="button"
           id="main-analyze-btn"
           onClick={handleAnalyzeClick}
           disabled={isAnalyzing}
-          className="inline-flex items-center justify-center gap-3 bg-[#14332a] dark:bg-emerald-900 hover:bg-[#0f2d22] dark:hover:bg-emerald-800 text-white rounded-full px-9 py-4 text-[15px] sm:text-[16px] font-bold shadow-[0_10px_25px_rgba(20,51,42,0.22)] dark:shadow-none transition-all active:scale-98 cursor-pointer disabled:opacity-75"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#14332a] dark:bg-emerald-900 hover:bg-[#0f2d22] dark:hover:bg-emerald-800 text-white rounded-full px-7 sm:px-9 py-3.5 sm:py-4 text-[15px] sm:text-[16px] font-bold shadow-[0_10px_25px_rgba(20,51,42,0.22)] dark:shadow-none transition-all active:scale-98 cursor-pointer disabled:opacity-75"
         >
           {isAnalyzing ? (
             <>
@@ -400,7 +409,7 @@ export const InputSection: React.FC<InputSectionProps> = ({
         </button>
 
         <span className="inline-flex items-center gap-2.5 text-[13px] sm:text-[14px] font-medium text-[#5f7a72] dark:text-slate-400">
-          <span className="w-6 h-6 rounded-full bg-[#e6f0e6] dark:bg-[#132A1F] flex items-center justify-center">
+          <span className="w-6 h-6 rounded-full bg-[#e6f0e6] dark:bg-[#132A1F] flex items-center justify-center shrink-0">
             <CheckCircle2 className="w-4 h-4 text-[#2d6a4f] dark:text-[#4ADE80]" />
           </span>
           Instant neural match & ATS audit
